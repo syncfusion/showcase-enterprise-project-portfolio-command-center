@@ -1,0 +1,60 @@
+{
+  "logDir": "../../validation/logs",
+  "appDir": "../..",
+  "concurrency": 3,
+  "build": "npm run build",
+  "serve": {
+    "command": "node server.mjs",
+    "env": {
+      "PORT": "5180"
+    },
+    "health": "http://127.0.0.1:5180/healthz"
+  },
+  "steps": [
+    {
+      "name": "check-app",
+      "title": "check-app source checks",
+      "serial": true,
+      "command": "cd ../../../.. && node factory/tools/factory.mjs check-app --app enterprise-project-portfolio-command-center",
+      "log": "{phase}-check-app.log"
+    },
+    {
+      "name": "tsc",
+      "title": "TypeScript",
+      "serial": true,
+      "command": "npx tsc -b --noEmit",
+      "log": "{phase}-tsc.log",
+      "reusable": true
+    },
+    {
+      "name": "tests",
+      "title": "Unit and hosting tests",
+      "serial": true,
+      "command": "npm test",
+      "log": "{phase}-tests.log",
+      "reusable": true
+    },
+    {
+      "name": "browser",
+      "title": "Browser check, every route x 2 themes x 4 sizes",
+      "needsServer": true,
+      "reusable": true,
+      "phases": [
+        "build",
+        "validate"
+      ],
+      "command": "node browser-check.mjs --config browser-check.{phase}.config.json --concurrency 2",
+      "log": "{phase}-browser-check.json"
+    },
+    {
+      "name": "browser-prototype",
+      "title": "Browser check, changed routes, desktop and phone",
+      "needsServer": true,
+      "phases": [
+        "prototype"
+      ],
+      "command": "node browser-check.mjs --config browser-check.prototype.config.json --viewports wide,phone",
+      "log": "{phase}-browser-check.json"
+    }
+  ]
+}

@@ -1,0 +1,337 @@
+@import "tailwindcss";
+/* The Syncfusion Tailwind 3 theme is linked from index.html (see scripts/copy-theme.mjs). */
+@import "./tokens.css";
+@import "./app-tokens.css";
+
+@layer base {
+  /* Tailwind 4's preflight gives buttons the arrow; everything clickable shows the pointer (design-system.md). */
+  button:not(:disabled), [role="button"], a[href], summary, label[for] { cursor: pointer; }
+}
+
+html, body, #root { height: 100%; }
+html { overflow-x: hidden; }
+body { margin: 0; min-width: 320px; font-family: var(--sf-font-sans); font-size: 14px; background: var(--app-shell-bg); color: var(--color-sf-fg-primary); }
+:focus-visible { outline: 2px solid var(--app-focus-ring); outline-offset: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.text-link { color: var(--color-sf-fg-brand-primary); font-weight: 600; text-decoration: underline; }
+.text-link:hover, .portfolio-name:hover { color: var(--color-sf-fg-brand-primary); background: var(--color-sf-bg-surface-hover); }
+a.portfolio-name { color: var(--color-sf-fg-primary); text-decoration: none; }
+a.portfolio-name:hover { color: var(--color-sf-fg-brand-primary); text-decoration: underline; }
+
+/* Toasts sit under the app header. */
+.e-toast-container.e-toast-top-right { top: calc(var(--app-shell-header-height) + var(--sf-space-3)) !important; }
+.app-dialog .e-dlg-content p { margin: 0; line-height: 1.5; color: var(--color-sf-fg-primary); }
+
+.stage-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.stage-table caption { text-align: left; color: var(--color-sf-fg-secondary); font-size: 12px; padding-bottom: var(--sf-space-2); }
+.stage-table th, .stage-table td { padding: 6px var(--sf-space-2); border-bottom: 1px solid var(--color-sf-border-primary); text-align: left; }
+.stage-table td { text-align: right; font-variant-numeric: tabular-nums; }
+
+.kanban-scroll { overflow-x: auto; }
+.kanban-scroll .e-kanban { width: 100%; }
+/* Under 1024px the board keeps 840px inside its scroll container (min card width 120px). */
+@media (max-width: 1023.98px) { .kanban-scroll .e-kanban { width: 840px; min-width: 840px; } }
+/* Cards keep >=120px inside 132px columns: the wrapper's 12px side padding is trimmed. */
+/* Beat the theme's specific wrapper/card padding so cards keep >=120px in 132px columns. */
+.e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-wrapper,
+.e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-container { padding: 0; }
+.e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-wrapper .e-card { padding: 5px 1px; margin-bottom: 8px; min-width: 120px; }
+.e-kanban .e-card { border-width: 1px; }
+.e-kanban .e-card-wrapper { padding: 0; }
+.e-kanban .e-card { padding: 6px 8px; margin: 0 0 10px; }
+
+/* Brand fills for Syncfusion primary mappings (app-tokens.css). */
+:root {
+  --app-on-brand: #ffffff;
+  --app-brand-fill: var(--sf-color-blue-600);
+  --app-brand-fill-hover: color-mix(in srgb, var(--sf-color-blue-600) 85%, var(--sf-color-slate-900));
+  --app-brand-fill-pressed: color-mix(in srgb, var(--sf-color-blue-600) 75%, var(--sf-color-slate-900));
+  --app-brand-fill-disabled: color-mix(in srgb, var(--sf-color-slate-500) 40%, transparent);
+}
+:root[data-theme="dark"] { --app-on-brand: #0b1220; }
+
+/* Focus rings for :focus-visible only, brand tone (design-system.md). */
+.e-grid .e-row .e-rowcell:focus-visible, .e-headercell:focus-visible, .e-kanban .e-card:focus-visible,
+.e-grid .e-row:focus-visible { outline: 2px solid var(--color-sf-fg-brand-primary); outline-offset: -2px; }
+.e-grid .e-row .e-rowcell:focus { outline: none; }
+/* The DateRangePicker input keeps its own size; never stretched across the page. */
+#capacity-range-picker, .capacity-range .e-input-group { max-width: 230px; }
+/* Capacity page (rev 3): the range picker sits in a compact strip between the KPI cards
+   and the charts; the by-month chart shares the row width with the role chart on wide
+   screens and stacks below it on narrow ones. */
+.capacity-range { display: flex; align-items: center; gap: var(--sf-space-3); margin: 0 0 var(--sf-space-4); }
+.capacity-panels { display: block; }
+.capacity-kpis { margin-bottom: var(--sf-space-4); }
+
+/* Gantt task labels read on their bars in both themes (check flagged 2.82:1). */
+.e-gantt .e-gantt-tree-table .e-rowcell { color: var(--color-sf-fg-primary); }
+.e-gantt .e-taskbar-label { color: #ffffff; font-weight: 600; }
+/* The split view keeps its own horizontal scroll at narrow widths (like the Kanban board). */
+.gantt-scroll { overflow-x: auto; }
+/* Gantt/Kanban cells show keyboard focus; click focus stays neutral. */
+.e-gantt .e-rowcell:focus-visible, .e-kanban .e-rowcell:focus-visible,
+.e-gantt .e-rowcell.e-ellipsistooltip:focus-visible { outline: 2px solid var(--color-sf-fg-brand-primary); outline-offset: -1px; }
+/* Charts are SVG-focus surfaces; the theme renders no ring on the trend chart (T-07 rev 2).
+   Plain :focus (not only :focus-visible): after a mouse action the browser suppresses
+   :focus-visible for later Tab stops, leaving the chart focus invisible. */
+/* !important: the ej2 theme ships `.e-control:focus { outline: none }` and loads after the
+   app stylesheet, so a same-specificity .e-chart:focus rule loses the cascade. */
+.e-chart:focus, .e-accumulationchart:focus, #ontime-trend:focus { outline: 2px solid var(--color-sf-fg-brand-primary) !important; outline-offset: 2px !important; }
+.e-gantt .e-rowcell:focus, .e-kanban .e-rowcell:focus { outline: none; }
+.e-gantt .e-gantt-tree-grid.e-treegrid:focus { outline: none; }
+.e-gantt .e-gantt-tree-grid.e-treegrid:focus-visible { outline: 2px solid var(--color-sf-fg-brand-primary); outline-offset: -2px; }
+.e-gantt .e-rowcell:focus-visible, .e-kanban .e-rowcell:focus-visible,
+.e-gantt .e-gantt-tree-table .e-rowcell:focus-visible { outline: 2px solid var(--color-sf-fg-brand-primary); outline-offset: -1px; }
+/* The treegrid's keyboard-navigated cell draws the theme's 3px inset shadow; make it read as a ring. */
+.e-gantt .e-gantt-tree-table .e-rowcell.e-focused { outline: 2px solid var(--color-sf-fg-brand-primary); outline-offset: -2px; }
+.e-diagram:focus, .e-diagram *:focus { outline: none; }
+#dependency-diagramcontent:focus-visible, .e-diagram:focus-visible { outline: 2px solid var(--color-sf-fg-brand-primary); outline-offset: 2px; }
+/* Grid cell dropdowns and headers show keyboard focus; click focus stays neutral. */
+.e-grid .e-rowcell .e-ddl:focus-visible, .e-grid .e-rowcell input:focus-visible, .e-grid .e-headercell:focus-visible,
+.e-grid .e-rowcell:focus-visible { outline: 2px solid var(--color-sf-fg-brand-primary); outline-offset: -1px; }
+.e-grid .e-rowcell select:focus, .e-grid .e-rowcell select:focus-visible, .e-grid .e-rowcell .e-ddl:focus-visible,
+.e-grid .e-rowcell input:focus-visible { outline: 2px solid var(--color-sf-fg-brand-primary); outline-offset: 1px; }
+.e-grid .e-rowcell .e-ddl:focus, .e-grid .e-rowcell input:focus { outline: none; }
+/* Clicked/selected Kanban cards keep the neutral fill; only :focus-visible shows a ring. */
+
+.e-kanban .e-card, .e-kanban .e-card:hover, .e-kanban .e-card:active, .e-kanban .e-card:focus,
+.e-kanban .e-card.e-dragging, .e-kanban .e-card.e-card-selected { box-shadow: none !important; border-top-color: var(--sf-color-slate-200) !important; }
+.e-kanban .e-card:focus { outline: none; }
+
+.e-kanban .e-card:focus-visible { outline: 2px solid var(--color-sf-fg-brand-primary); outline-offset: 1px; }
+.gantt-scroll .e-gantt { min-width: 0; }
+
+/* The dependency diagram reserves its height so its card does not reflow while it draws (shift check). */
+.diagram-scroll { overflow-x: auto; }
+
+/* ---- Pages ---- */
+.page { max-width: var(--app-content-max); margin: 0 auto; padding: var(--sf-space-6) var(--sf-space-5) calc(var(--sf-space-6) * 2); }
+.page-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--sf-space-3) var(--sf-space-6); margin-bottom: var(--sf-space-6); padding: 0 var(--sf-space-1); }
+.page-header h1 { font-size: 24px; line-height: 32px; font-weight: 600; margin: 0; }
+.page-header p { margin: var(--sf-space-2) 0 0; line-height: 20px; color: var(--color-sf-fg-secondary); }
+.page-header .page-note { max-width: 440px; margin: 0; }
+.page-note { font-size: 13px; line-height: 20px; }
+/* The filter bar is a Card with no bottom margin: without this the page title sits flush against it. */
+.page > .filter-bar { margin-bottom: var(--sf-space-6); }
+.page h2 { display: flex; align-items: center; gap: var(--sf-space-2); font-size: 16px; font-weight: 600; margin: 0 0 var(--sf-space-3); }
+.page h2 .count { display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; font-size: 12px; background: var(--app-badge-neutral-bg); color: var(--app-badge-neutral-fg); }
+.page section + section { margin-top: calc(var(--sf-space-6) + var(--sf-space-2)); }
+
+.state { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--sf-space-2); padding: calc(var(--sf-space-6) * 1.5) var(--sf-space-6); text-align: center; color: var(--color-sf-fg-secondary); }
+.state p { margin: 0; }
+.state.error > svg { color: var(--color-sf-fg-danger-primary); }
+.state-title { font-weight: 600; font-size: 16px; color: var(--color-sf-fg-primary); }
+.state-actions { margin-top: var(--sf-space-3); display: flex; gap: var(--sf-space-3); }
+
+/* Status badges: colour + a second cue (a shape/icon), never colour alone (design-system.md, Colour semantics). */
+.status-badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px var(--sf-space-2); border-radius: 999px; font-size: 12px; font-weight: 600; line-height: 16px; white-space: nowrap; }
+.status-badge.tone-success { background: var(--app-badge-success-bg); color: var(--app-badge-success-fg); }
+.status-badge.tone-warning { background: var(--app-badge-warning-bg); color: var(--app-badge-warning-fg); }
+.status-badge.tone-danger { background: var(--app-badge-danger-bg); color: var(--app-badge-danger-fg); }
+.status-badge.tone-neutral { background: var(--app-badge-neutral-bg); color: var(--app-badge-neutral-fg); }
+.status-badge.tone-info { background: var(--app-badge-info-bg); color: var(--app-badge-info-fg); }
+
+/* KPI Card surface (design-system.md, Syncfusion KPI Card pattern). */
+.e-card.kpi-card { display: flex; flex-direction: column; justify-content: space-between; min-height: var(--sf-size-kpi-min-height); padding: var(--sf-space-5); background: var(--app-card-bg); border: 1px solid var(--app-card-border); border-radius: var(--sf-radius-lg); box-shadow: var(--app-card-shadow); color: var(--color-sf-fg-primary); line-height: normal; }
+.kpi-card-title { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--color-sf-fg-secondary); padding-right: calc(var(--sf-size-kpi-icon) + var(--sf-space-3)); }
+.kpi-card-value { font-size: 24px; line-height: 32px; font-weight: 600; margin-top: var(--sf-space-2); }
+.kpi-card-note { font-size: 12px; line-height: 18px; color: var(--color-sf-fg-secondary); margin-top: var(--sf-space-2); }
+.kpi-card-icon { position: absolute; top: var(--sf-space-4); right: var(--sf-space-4); display: grid; place-items: center; width: var(--sf-size-kpi-icon); height: var(--sf-size-kpi-icon); border-radius: var(--sf-radius-md); background: var(--app-kpi-icon-bg); color: var(--app-kpi-icon-fg); }
+.kpi-card { position: relative; }
+
+/* Panel surfaces for charts and grids. */
+.e-card.panel-card { background: var(--app-card-bg); border: 1px solid var(--app-card-border); border-radius: var(--sf-radius-lg); box-shadow: var(--app-card-shadow); color: var(--color-sf-fg-primary); line-height: normal; }
+/* The ej2 theme centres .e-card content (justify-content: center) on the card and its header:
+   titles floated to the middle and short cards pushed their header down. Start-align both
+   and give the title real padding (rev 4, user feedback: titles lacked space). */
+.e-card.panel-card { justify-content: flex-start; }
+.e-card.panel-card .e-card-header { justify-content: flex-start; padding: var(--sf-space-5) var(--sf-space-5) var(--sf-space-3); }
+.e-card.panel-card .e-card-header-caption { padding: 0; }
+.e-card.panel-card .e-card-header-title { font-size: 16px; line-height: 24px; font-weight: 600; text-align: left; }
+.panel-body { padding: 0 var(--sf-space-5) var(--sf-space-5); }
+.panel-actions { margin-bottom: var(--sf-space-3); }
+
+/* Scorecard: fixed CSS grid arrangement (Dashboard Layout dropped with user confirmation, 2026-10-16). */
+.scorecard-grid { display: grid; gap: var(--sf-space-4); grid-template-columns: repeat(4, minmax(0, 1fr)); }
+/* An actionable KPI card: the whole card is one link; no nested button (design-system.md, KPI Card pattern). */
+.kpi-card-link { display: block; text-decoration: none; color: inherit; border-radius: var(--sf-radius-lg); background: transparent; }
+.kpi-card-link:hover { background: var(--color-sf-bg-surface-hover); }
+.kpi-card-link:focus-visible { outline: 2px solid var(--app-focus-ring); outline-offset: 2px; }
+.kpi-card-link:hover .kpi-card { background: var(--color-sf-bg-surface-hover); border-color: var(--color-sf-border-brand); }
+.kpi-card-link:hover .kpi-card .kpi-card-title { color: var(--color-sf-fg-brand-primary); }
+.kpi-card-link:hover .kpi-card { border-color: var(--color-sf-border-brand); box-shadow: var(--app-card-shadow); }
+@media (max-width: 1279.98px) { .scorecard-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 639.98px) { .scorecard-grid { grid-template-columns: 1fr; } }
+/* Scorecard panels, asymmetric arrangement (T-07 rev 2, user appearance feedback 2026-10-16):
+   top band 2 columns (donut 3fr : stage 2fr), lower band 3 equal cards, portfolios full width.
+   Equal 3-column cards stretched short tables into ~400px of empty card space. */
+/* The three panel rows are sibling grids: without a stack gap they touched (0px between rows). */
+.scorecard-breakdown { display: grid; gap: var(--sf-space-4); }
+.scorecard-panels { display: grid; gap: var(--sf-space-4); grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.scorecard-panels:first-child { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); align-items: stretch; }
+.scorecard-panels .panel-health { grid-column: 1; }
+.scorecard-panels .panel-stage { grid-column: 2; }
+/* Block flow (not grid): an ejs chart inside a grid auto-track shrink-wraps to ~99px
+   and can never re-measure with its container after a sidebar dock (T-07 rev 2).
+   The donut fills the panel width (no max-width cap) so it re-measures with the container. */
+.panel-body-center { display: block; }
+.panel-body-center #health-donut { width: 100%; height: 340px; }
+.panel-body-center #health-donut svg { width: 100%; height: 100%; }
+.panel-body-center .chart-legend-list { margin: var(--sf-space-3) auto 0; width: 100%; }
+.stage-table td { width: 100%; }
+.stage-count { font-weight: 600; display: inline-block; min-width: 2.5ch; }
+.stage-bar { display: inline-block; width: calc(100% - 3.5ch); height: 6px; margin-left: var(--sf-space-2); vertical-align: middle; border-radius: 999px; background: var(--color-sf-bg-surface-muted, var(--app-card-bg)); overflow: hidden; }
+.stage-bar-fill { display: block; height: 100%; border-radius: 999px; background: var(--color-sf-fg-brand-primary); }
+.panel-milestones .mini-list li, .panel-risks .mini-list li { display: grid; gap: 2px; padding: var(--sf-space-2) 0; border-bottom: 1px solid var(--app-card-border); }
+.panel-milestones .mini-list li:last-child, .panel-risks .mini-list li:last-child { border-bottom: none; }
+.mini-name { font-weight: 500; text-decoration: none; color: var(--color-sf-fg-primary); }
+.mini-name:hover { text-decoration: underline; color: var(--color-sf-fg-brand-primary); }
+.mini-meta { font-size: 12px; color: var(--color-sf-fg-secondary); }
+.portfolio-list-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sf-space-3); list-style: none; margin: 0; padding: 0; }
+.portfolio-tile { display: grid; gap: var(--sf-space-1); padding: var(--sf-space-4); border: 1px solid var(--app-card-border); border-radius: var(--sf-radius-md); background: var(--color-sf-bg-surface-hover); justify-items: start; }
+.portfolio-name { font-weight: 600; text-decoration: none; color: var(--color-sf-fg-primary); }
+.portfolio-name:hover { color: var(--color-sf-fg-brand-primary); text-decoration: underline; }
+.portfolio-meta { font-size: 12px; color: var(--color-sf-fg-secondary); }
+.portfolio-health { display: inline-flex; align-items: center; gap: var(--sf-space-2); font-size: 12px; color: var(--color-sf-fg-secondary); }
+@media (max-width: 1279.98px) {
+  .scorecard-panels:first-child { grid-template-columns: 1fr; }
+  .scorecard-panels:first-child .panel-health { grid-column: auto; }
+  .scorecard-panels:first-child .panel-stage { grid-column: auto; }
+  .portfolio-list-cards { grid-template-columns: 1fr; }
+}
+
+/* App buttons that carry a Lucide icon beside their text. */
+.e-btn.app-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--sf-space-2); }
+
+/* Health page (factory/standards/health-check.md): outside the shell. */
+.healthz { max-width: 640px; margin: 0 auto; padding: var(--sf-space-6); }
+.healthz h1 { font-size: 24px; font-weight: 600; margin: 0 0 var(--sf-space-4); }
+.healthz dl { display: grid; grid-template-columns: max-content 1fr; gap: var(--sf-space-2) var(--sf-space-4); margin: 0; }
+.healthz dt { color: var(--color-sf-fg-secondary); }
+.healthz dd { margin: 0; font-weight: 600; }
+.tone-success { color: var(--color-sf-fg-success-primary); }
+.tone-danger { color: var(--color-sf-fg-danger-primary); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+/* ---- Responsive and readability pass (2026-10-21 UI review) ---- */
+/* Lower bands: three cards on wide screens, one column below 1024px (they were squeezed to ~100px on phones). */
+.scorecard-panels-second { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.scorecard-panels-third { grid-template-columns: minmax(0, 1fr); }
+/* Portfolio tiles: full-width row of three; stacked on phones. */
+.portfolio-list-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 767.98px) { .portfolio-list-cards { grid-template-columns: minmax(0, 1fr); } }
+.portfolio-tile { min-width: 0; }
+.portfolio-health { flex-wrap: wrap; }
+/* Over-budget variance reads as a judgement: tone plus the sign in the value. */
+.variance-over { color: var(--color-sf-fg-danger-primary); }
+.variance-under { color: var(--color-sf-fg-success-primary); }
+
+/* Register: numbers never break inside; long names wrap on word boundaries. */
+#register-grid .e-rowcell, #register-grid .e-headercell { word-break: normal; overflow-wrap: normal; }
+#register-grid .e-rowcell.num { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.project-cell { display: grid; gap: 2px; min-width: 0; }
+.project-cell .project-name { font-weight: 600; color: var(--color-sf-fg-primary); }
+.project-cell .project-meta { font-size: 12px; color: var(--color-sf-fg-secondary); }
+.progress { display: flex; align-items: center; gap: var(--sf-space-2); min-width: 0; }
+.progress-track { flex: 1; min-width: 40px; height: 6px; border-radius: 999px; background: var(--app-badge-neutral-bg); overflow: hidden; }
+.progress-fill { display: block; height: 100%; border-radius: 999px; background: var(--color-sf-fg-brand-primary); }
+.progress-value { font-size: 12px; font-variant-numeric: tabular-nums; min-width: 4ch; text-align: right; }
+/* Phone register: one card per project instead of a 10-column grid. */
+.register-list { display: none; list-style: none; margin: 0; padding: 0; gap: var(--sf-space-3); }
+.e-card.register-item { display: grid; justify-content: stretch; line-height: normal; gap: var(--sf-space-2); padding: var(--sf-space-4); border: 1px solid var(--app-card-border); border-radius: var(--sf-radius-lg); background: var(--app-card-bg); }
+.register-item-head { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--sf-space-2); }
+.register-item dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px var(--sf-space-3); margin: 0; font-size: 13px; }
+.register-item dt { color: var(--color-sf-fg-secondary); }
+.register-item dd { margin: 0; font-variant-numeric: tabular-nums; }
+@media (max-width: 1279.98px) {
+  .register-list { display: grid; }
+  .register-grid-wrap { display: none; }
+}
+
+/* Risk grid shows every open risk (no inner scroll). */
+#risk-grid .e-gridcontent .e-content { height: auto !important; }
+
+/* Kanban card content (template): name, health badge and portfolio. */
+.kanban-item { display: grid; gap: 6px; padding: 4px 2px; }
+.kanban-item-id { font-size: 12px; font-weight: 600; color: var(--color-sf-fg-secondary); }
+.kanban-item-name { font-weight: 600; line-height: 18px; color: var(--color-sf-fg-primary); }
+.kanban-item-meta { font-size: 12px; color: var(--color-sf-fg-secondary); }
+.kanban-item .status-badge { justify-self: start; }
+
+/* Gantt legend chips under the timeline. */
+.timeline-legend { display: flex; flex-wrap: wrap; gap: var(--sf-space-2) var(--sf-space-4); margin-top: var(--sf-space-3); font-size: 12px; color: var(--color-sf-fg-secondary); list-style: none; padding: 0; }
+.timeline-legend li { display: inline-flex; align-items: center; gap: 6px; }
+.timeline-legend .swatch { width: 14px; height: 8px; border-radius: 3px; display: inline-block; }
+.inline-note { display: flex; align-items: center; gap: 6px; }
+.app-shell .app-shell-brand-text strong { white-space: normal; overflow: visible; text-overflow: clip; line-height: 1.2; }
+@media (max-width: 639.98px) {
+  #eppcc-profile { max-width: 128px; text-overflow: ellipsis; }
+  .app-shell-header-end { gap: 4px; }
+}
+
+.exposure { display: grid; gap: 2px; justify-items: start; }
+/* Links inside grid cells and the DropDownList popup show keyboard focus in the brand tone. */
+.e-grid .e-rowcell a:focus-visible, .e-popup .e-list-parent:focus-visible, .e-popup .e-list-item.e-item-focus { outline: 2px solid var(--color-sf-fg-brand-primary); outline-offset: -2px; }
+/* The Gantt's demo-today marker label reads on both themes. */
+.e-gantt .e-gantt-chart .e-event-markers .e-span-label { background: var(--color-sf-bg-surface) !important; color: var(--color-sf-fg-primary) !important; border: 1px solid var(--color-sf-border-primary); }
+.e-gantt .e-event-markers .e-gantt-right-arrow { border-right-color: var(--color-sf-border-primary); }
+/* A keyboard-focused Grid cell shows the brand ring, template cells included (beats the later :focus reset). */
+.e-grid .e-row .e-rowcell:focus-visible, .e-grid .e-row .e-rowcell.e-templatecell:focus-visible { outline: 2px solid var(--color-sf-fg-brand-primary) !important; outline-offset: -2px; }
+
+/* ---- Cards fill their row (2026-10-21 feedback): header with subtitle, body grows, charts take the space ---- */
+.e-card.panel-card { display: flex; flex-direction: column; }
+.e-card.panel-card .e-card-header .e-card-header-caption { display: grid; gap: 2px; }
+.e-card.panel-card .e-card-header .e-card-sub-title { font-size: 12px; line-height: 18px; font-weight: 400; color: var(--color-sf-fg-secondary); padding: 0; text-align: left; white-space: normal; }
+.e-card.panel-card > .panel-body { flex: 1 1 auto; display: flex; flex-direction: column; min-height: 0; padding-top: var(--sf-space-4); }
+/* A chart wrapper grows with its card; the chart is height="100%" of it (Syncfusion re-measures on resize). */
+.chart-fill { position: relative; flex: 1 1 auto; min-height: 240px; }
+.trend-fill { min-height: 240px; }
+/* Health: donut beside a legend with counts and shares; stacked on narrow cards. */
+.health-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(170px, auto); align-items: center; gap: var(--sf-space-4); }
+.donut-fill { min-height: 300px; height: 100%; }
+.donut-centre { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; pointer-events: none; }
+.donut-centre strong { font-size: 28px; line-height: 32px; font-weight: 700; color: var(--color-sf-fg-primary); }
+.donut-centre span { font-size: 12px; color: var(--color-sf-fg-secondary); }
+.health-legend { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--sf-space-3); }
+.health-legend li { display: grid; grid-template-columns: auto auto; justify-content: start; align-items: center; gap: 2px var(--sf-space-3); }
+.health-legend-count { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.health-legend-share { grid-column: 1 / -1; font-size: 12px; color: var(--color-sf-fg-secondary); }
+@media (max-width: 639.98px) { .health-body { grid-template-columns: minmax(0, 1fr); } .health-legend li { grid-template-columns: auto auto 1fr; } .health-legend-share { grid-column: auto; } }
+/* Stage summary: the rows share the card's height. */
+.stage-fill { flex: 1 1 auto; display: flex; min-height: 0; }
+.stage-fill .stage-table { height: 100%; }
+/* Charts fill their wrapper without setting the row height: the wrapper sizes from the card,
+   the chart sits absolutely inside it (so a 100% chart cannot grow the row it is measuring). */
+.chart-fill > .e-chart, .chart-fill > .e-accumulationchart { position: absolute !important; inset: 0; }
+.e-card.panel-card > .panel-body { justify-content: flex-start; }
+.e-card.panel-card > .panel-body.health-body { display: grid; }
+/* Lists start at the top; their footnote sits at the card's bottom edge. */
+.e-card.panel-card > .panel-body > .page-note:last-child { margin-top: auto; padding-top: var(--sf-space-3); }
+.e-card.panel-card .e-card-header .e-card-header-caption .e-card-header-title { font-size: 16px; line-height: 24px; font-weight: 600; color: var(--color-sf-fg-primary); }
+/* Lower band between 640 and 1279px: the trend takes the full row, milestones and risks share the next. */
+@media (max-width: 1279.98px) and (min-width: 640px) {
+  .scorecard-panels.scorecard-panels-second { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .scorecard-panels-second .panel-trend { grid-column: 1 / -1; }
+}
+@media (max-width: 639.98px) { .scorecard-panels.scorecard-panels-second { grid-template-columns: minmax(0, 1fr); } }
+
+/* Header row with actions: title block on the left, actions (search) on the right; wraps on narrow cards. */
+.e-card.panel-card .e-card-header.panel-header-with-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--sf-space-3); }
+.panel-header-actions { display: flex; align-items: center; gap: var(--sf-space-2); margin-left: auto; }
+.e-input-group.header-search { width: 240px; max-width: 100%; margin: 0; }
+@media (max-width: 639.98px) { .panel-header-actions, .e-input-group.header-search { width: 100%; } }
+/* The header's native profile select follows the theme (its popup too, through color-scheme). */
+:root { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+.app-profile-select { height: 36px; padding: 0 28px 0 10px; border: 1px solid var(--color-sf-border-primary); border-radius: var(--sf-radius-md); background-color: var(--color-sf-bg-surface); color: var(--color-sf-fg-primary); font: inherit; font-size: 13px; }
+.app-profile-select option { background-color: var(--color-sf-bg-surface); color: var(--color-sf-fg-primary); }
+.app-profile-select:focus-visible { outline: 2px solid var(--app-focus-ring); outline-offset: 2px; }
+/* With the brand primary now resolving, the Grid draws an inset ring on a clicked cell; show it for keyboard focus only. */
+.e-grid .e-row .e-rowcell.e-focused:not(:focus-visible), .e-grid .e-headercell.e-focused:not(:focus-visible) { box-shadow: none !important; }
+
+/* Header "Remember my edits" switch (replaces the profile select, 2026-10-21). */
+.remember-edits { display: inline-flex; align-items: center; gap: var(--sf-space-2); font-size: 13px; color: var(--color-sf-fg-primary); white-space: nowrap; }
+.remember-edits label { cursor: pointer; }
+@media (max-width: 479.98px) { .remember-edits label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } }

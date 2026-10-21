@@ -1,0 +1,34 @@
+/* Filter bar (syncfusion-component-patterns.md, "Filter bar"). Component tokens from
+   bds-sales-crm.tokens.css; no raw values. A Syncfusion Card that only holds controls: no hover tint
+   or pressed border (design-system.md, "Interaction states"). */
+.filter-bar.e-card {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: var(--sf-space-4) var(--app-filter-gap);
+  padding: var(--sf-space-3) var(--sf-space-4);
+  background: var(--app-card-bg);
+  border: 1px solid var(--app-card-border);
+  box-shadow: var(--app-card-shadow);
+}
+.filter-bar.e-card:hover,
+.filter-bar.e-card:active {
+  background: var(--app-card-bg);
+  border-color: var(--app-card-border);
+}
+.filter-bar__intro { display: grid; gap: var(--sf-space-1); }
+.filter-bar__title { font-weight: 650; color: var(--color-sf-fg-primary); }
+.filter-bar__note { color: var(--color-sf-fg-secondary); }
+.filter-field { display: grid; gap: var(--sf-space-1); flex: 0 1 auto; min-width: 0; }
+.filter-field__label { color: var(--color-sf-fg-secondary); font-weight: 600; }
+.filter-field--period .e-input-group, .filter-field--period .e-dropdownlist { width: 230px; }
+.filter-field--select .e-input-group, .filter-field--select .e-dropdownlist { width: 200px; }
+.filter-field--wide .e-input-group { width: 320px; }
+.filter-reset.e-outline { align-self: flex-end; }
+.filter-chip.e-btn {
+  display: inline-flex; align-items: center; gap: 4px; border-radius: 999px;
+  padding: 4px 10px; font-size: 12px;
+}
+@media (prefers-reduced-motion: reduce) { .filter-bar.e-card, .filter-chip.e-btn { transition: none; } }

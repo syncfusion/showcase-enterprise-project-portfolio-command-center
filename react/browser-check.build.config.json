@@ -1,0 +1,113 @@
+{
+  "baseUrl": "http://localhost:5180/enterprise-project-portfolio-command-center/react/",
+  "routes": [
+    {
+      "name": "scorecard",
+      "path": "./scorecard",
+      "settleMs": 2500
+    },
+    {
+      "name": "register",
+      "path": "./register",
+      "settleMs": 2500
+    },
+    {
+      "name": "capacity",
+      "path": "./capacity",
+      "settleMs": 2500
+    },
+    {
+      "name": "risk-dependencies",
+      "path": "./risk-dependencies",
+      "settleMs": 2500
+    },
+    {
+      "name": "milestones",
+      "path": "./milestones",
+      "settleMs": 2500
+    },
+    {
+      "name": "cta-review-the-project-register",
+      "path": "./scorecard",
+      "click": [
+        "Review the project register"
+      ],
+      "expectHeading": "Portfolio Register",
+      "themeSwitch": false,
+      "settleMs": 2500
+    },
+    {
+      "name": "cta-plan-resource-capacity",
+      "path": "./scorecard",
+      "click": [
+        "Plan resource capacity"
+      ],
+      "expectHeading": "Resource Capacity",
+      "themeSwitch": false,
+      "settleMs": 2500
+    },
+    {
+      "name": "cta-review-risks-and-dependencies",
+      "path": "./scorecard",
+      "click": [
+        "Review risks and dependencies"
+      ],
+      "expectHeading": "Risks & Dependencies",
+      "themeSwitch": false,
+      "settleMs": 2500
+    },
+    {
+      "name": "cta-track-milestones-and-governance",
+      "path": "./scorecard",
+      "click": [
+        "Track milestones and governance"
+      ],
+      "expectHeading": "Milestones & Timeline",
+      "themeSwitch": false,
+      "settleMs": 2500
+    },
+    {
+      "name": "cta-open-project-in-register",
+      "path": "./risk-dependencies",
+      "click": [
+        "Open project in register"
+      ],
+      "expectHeading": "Portfolio Register",
+      "themeSwitch": false,
+      "settleMs": 2500
+    },
+    {
+      "name": "cta-open-governance-board",
+      "path": "./milestones",
+      "click": [
+        "Open governance board"
+      ],
+      "expectHeading": "Milestones & Timeline",
+      "themeSwitch": false,
+      "settleMs": 2500
+    }
+  ],
+  "themes": {
+    "light": {
+      "localStorage": {
+        "enterprise-project-portfolio-command-center-theme": "light"
+      }
+    },
+    "dark": {
+      "localStorage": {
+        "enterprise-project-portfolio-command-center-theme": "dark"
+      }
+    }
+  },
+  "themeSwitch": {
+    "button": "Switch to (light|dark) theme",
+    "settleMs": 2000
+  },
+  "screenshotDir": "../../validation/screenshots/build",
+  "allowTrialBanner": false,
+  "colourRules": [],
+  "notes": {
+    "allowTrialBanner": "A v34 license key is registered on this machine (2026-10-21): the banner must not appear.",
+    "browser-check-patch": "App-specific addition to the factory template copy: allowTrialBanner also removes the banner before the theme-switch click (the banner intercepts pointer events on the toggle). Recorded here; the rest of browser-check.mjs is byte-identical with the template."
+  }
+}

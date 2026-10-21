@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" />
+    <!-- startup-preload -->
+    <!-- Syncfusion theme first so the factory tokens in the app stylesheet override its variables. -->
+    <link rel="stylesheet" href="/styles/syncfusion/tailwind3.css" />
+    <title>Showcase - Enterprise Project Portfolio Command Center</title>
+    <!-- The chosen theme is set before the first paint so the startup frame matches it (design/DESIGN.md). -->
+    <script>
+      (function () { var t = null; try { t = localStorage.getItem('enterprise-project-portfolio-command-center-theme'); } catch (e) {} if (t !== 'light' && t !== 'dark') { t = 'light'; try { if (matchMedia('(prefers-color-scheme: dark)').matches) t = 'dark'; } catch (e) {} } document.documentElement.dataset.theme = t; document.documentElement.classList.toggle('e-dark-mode', t === 'dark'); })();
+    </script>
+    <!-- Loading states (factory/standards/app-source-baseline.md, "Loading states"): #app-boot is a static
+         copy of the app frame (sidebar, header, the page's "Loading <page>…" indicator) drawn before any
+         script or stylesheet arrives; React mounts in #root underneath and removes #app-boot once the
+         Syncfusion theme has loaded. Sizes and colours copy the shell's (app-shell.css tokens). -->
+    <style>
+      :root { --app-loading-bg: #f8fafc; --app-loading-fg: #667085; --app-loading-ring: #175cd3; --app-loading-track: #dbe5f5; }
+      :root[data-theme='dark'] { --app-loading-bg: #0f172a; --app-loading-fg: #94a3b8; --app-loading-ring: #60a5fa; --app-loading-track: #1e3a6e; }
+      html, body { margin: 0; background: var(--app-loading-bg); }
+      .app-loading { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+        min-height: 240px; padding: 24px; box-sizing: border-box; color: var(--app-loading-fg);
+        font: 500 14px/1.4 Inter, system-ui, -apple-system, 'Segoe UI', sans-serif; text-align: center; }
+      .app-loading__ring { width: 36px; height: 36px; border-radius: 50%; box-sizing: border-box;
+        border: 3px solid var(--app-loading-track); border-top-color: var(--app-loading-ring); animation: app-loading-spin 0.8s linear infinite; }
+      @keyframes app-loading-spin { to { transform: rotate(360deg); } }
+      @media (prefers-reduced-motion: reduce) { .app-loading__ring { animation: none; border-color: var(--app-loading-ring); } }
+      :root { --boot-page: #f6f8fb; --boot-surface: #ffffff; --boot-border: #e5e9f0; --boot-fg: #172033; --boot-muted: #667085; --boot-brand-bg: #eef4ff; --boot-brand-fg: #175cd3; }
+      :root[data-theme='dark'] { --boot-page: #020617; --boot-surface: #0f172a; --boot-border: #334155; --boot-fg: #f8fafc; --boot-muted: #94a3b8; --boot-brand-bg: #172554; --boot-brand-fg: #60a5fa; }
+      #app-boot { position: fixed; inset: 0; z-index: 1000; display: flex; background: var(--boot-page); color: var(--boot-fg);
+        font: 400 12px/1.4 Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+      .boot-side { flex: 0 0 240px; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px; padding: 12px 0;
+        background: var(--boot-surface); border-right: 1px solid var(--boot-border); overflow: hidden; }
+      .boot-brand { display: flex; align-items: center; gap: 12px; padding: 0 12px; min-height: 40px; }
+      .boot-logo { flex: 0 0 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+        background: var(--boot-brand-bg); color: var(--boot-brand-fg); }
+      .boot-brand strong { display: block; font-size: 14px; font-weight: 700; white-space: nowrap; }
+      .boot-brand small { display: block; font-size: 12px; color: var(--boot-muted); white-space: nowrap; }
+      .boot-links { list-style: none; margin: 0; padding: 0 12px; display: grid; gap: 4px; }
+      .boot-links li { display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 10px; border-radius: 8px; color: var(--boot-muted); white-space: nowrap; }
+      .boot-links li.is-current { background: var(--boot-brand-bg); color: var(--boot-brand-fg); font-weight: 600; }
+      .boot-links svg { flex: 0 0 20px; }
+      .boot-foot { margin-top: auto; padding: 0 16px; color: var(--boot-muted); }
+      .boot-work { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+      .boot-head { flex: 0 0 64px; box-sizing: border-box; display: flex; align-items: center; gap: 8px; padding: 0 16px;
+        background: var(--boot-surface); border-bottom: 1px solid var(--boot-border); }
+      .boot-toggle { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; color: var(--boot-muted); }
+      .boot-head strong { font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .boot-main { flex: 1; padding: 24px; }
+      #app-boot[data-nav='docked'] .boot-side { flex-basis: 64px; }
+      #app-boot[data-nav='docked'] .boot-brand > span, #app-boot[data-nav='docked'] .boot-links span, #app-boot[data-nav='docked'] .boot-foot { display: none; }
+      #app-boot[data-nav='docked'] .boot-links li { justify-content: center; padding: 0; }
+      #app-boot[data-nav='drawer'] .boot-side { display: none; }
+      @media (max-width: 1023.98px) { .boot-main { padding: 16px; } }
+    </style>
+  </head>
+  <body>
+    <div id="app-boot" aria-busy="true">
+      <aside class="boot-side" aria-hidden="true"><div class="boot-brand"><div class="boot-logo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></div><span><strong>Portfolio Command Center</strong><small>Northwind Enterprises</small></span></div>
+        <ul class="boot-links">
+          <li data-route="scorecard"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg><span>Executive Scorecard</span></li>
+          <li data-route="register"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-9 4 18 2-9h6"/></svg><span>Portfolio Register</span></li>
+          <li data-route="capacity"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Resource Capacity</span></li>
+          <li data-route="risk-dependencies"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg><span>Risks &amp; Dependencies</span></li>
+          <li data-route="milestones"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M12 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg><span>Milestones &amp; Timeline</span></li>
+        </ul><div class="boot-foot">Built with Syncfusion</div></aside>
+      <div class="boot-work"><div class="boot-head"><span class="boot-toggle" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/></svg></span><strong id="boot-title"></strong></div>
+        <div class="boot-main"><div class="app-loading" role="status" aria-live="polite"><div class="app-loading__ring" aria-hidden="true"></div><div id="boot-label">Loading Portfolio Command Center…</div></div></div></div>
+    </div>
+    <script>
+      // The frame's layout, title and current link, before the first paint: expanded or docked (the
+      // shell's saved choice) from 1024 px, the drawer below; the page from the address.
+      (function () {
+        var boot = document.getElementById('app-boot');
+        var labels = { scorecard: 'Executive Scorecard', register: 'Portfolio Register', capacity: 'Resource Capacity', 'risk-dependencies': 'Risks & Dependencies', milestones: 'Milestones & Timeline' };
+        var path = location.pathname.replace(/^\/enterprise-project-portfolio-command-center\/react/, '').replace(/^\//, '').split('/')[0] || 'scorecard';
+        var id = labels[path] ? path : 'scorecard';
+        var collapsed = false; try { collapsed = localStorage.getItem('enterprise-project-portfolio-command-center-nav-collapsed') === 'true'; } catch (e) {}
+        var nav = window.innerWidth < 1024 ? 'drawer' : collapsed ? 'docked' : 'expanded';
+        boot.setAttribute('data-nav', nav);
+        document.getElementById('boot-title').textContent = labels[id];
+        document.getElementById('boot-label').textContent = 'Loading ' + labels[id] + '\u2026';
+        var current = boot.querySelector('[data-route="' + id + '"]'); if (current) current.className = 'is-current';
+        if (path === 'healthz') boot.remove();
+      })();
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

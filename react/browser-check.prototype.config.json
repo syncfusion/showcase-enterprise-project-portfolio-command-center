@@ -1,0 +1,49 @@
+{
+  "baseUrl": "http://localhost:5180/enterprise-project-portfolio-command-center/react/",
+  "routes": [
+    {
+      "name": "scorecard",
+      "path": "./scorecard",
+      "settleMs": 2500
+    },
+    {
+      "name": "register",
+      "path": "./register",
+      "settleMs": 2500
+    },
+    {
+      "name": "capacity",
+      "path": "./capacity",
+      "settleMs": 1500
+    },
+    {
+      "name": "risk-dependencies",
+      "path": "./risk-dependencies",
+      "settleMs": 1500
+    },
+    {
+      "name": "milestones",
+      "path": "./milestones",
+      "settleMs": 1500
+    }
+  ],
+  "themes": {
+    "light": {
+      "localStorage": {
+        "enterprise-project-portfolio-command-center-theme": "light"
+      }
+    },
+    "dark": {
+      "localStorage": {
+        "enterprise-project-portfolio-command-center-theme": "dark"
+      }
+    }
+  },
+  "screenshotDir": "../../validation/screenshots/prototype-check",
+  "allowTrialBanner": false,
+  "colourRules": [],
+  "notes": {
+    "themes": "The app keeps the chosen theme in localStorage (key enterprise-project-portfolio-command-center-theme), the factory-standard mechanism, so the browser check selects themes through the config localStorage entries.",
+    "allowTrialBanner": "A v34 license key is registered on this machine (2026-10-21): the banner must not appear."
+  }
+}

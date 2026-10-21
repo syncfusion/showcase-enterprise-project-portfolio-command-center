@@ -1,0 +1,53 @@
+/* App-specific component tokens (design/DESIGN.md). Semantic roles only; raw values stay in tokens.css. */
+:root {
+  --app-content-max: 1440px;
+  --app-kpi-icon-bg: var(--color-sf-bg-brand-subtle);
+  --app-kpi-icon-fg: var(--color-sf-fg-brand-primary);
+  --app-badge-success-bg: var(--color-sf-bg-success-primary);
+  --app-badge-success-fg: var(--color-sf-fg-success-primary);
+  --app-badge-warning-bg: var(--color-sf-bg-warning-primary);
+  --app-badge-warning-fg: var(--color-sf-fg-warning-primary);
+  --app-badge-danger-bg: var(--color-sf-bg-danger-primary);
+  --app-badge-danger-fg: var(--color-sf-fg-danger-primary);
+  --app-badge-info-bg: var(--color-sf-bg-info-primary);
+  --app-badge-info-fg: var(--color-sf-fg-info-primary);
+  --app-badge-neutral-bg: var(--color-sf-bg-neutral-primary);
+  --app-badge-neutral-fg: var(--color-sf-fg-neutral-primary);
+  --app-chart-ontrack: var(--sf-color-green-600);
+  --app-chart-watch: var(--sf-color-amber-600);
+  --app-chart-atrisk: var(--sf-color-red-600);
+  --app-chart-stages: var(--sf-color-chart-blue);
+}
+/* Syncfusion's Tailwind 3 primary is indigo; this app's brand is blue. Map the theme's primary
+   variables to the brand in both themes with selectors that outrank the theme's :root
+   (design-system.md, "Syncfusion's accent is the app's brand"). */
+:root {
+  --color-sf-primary: rgba(23, 92, 211);
+  --color-sf-primary-light: rgba(59, 130, 246);
+  --color-sf-primary-lighter: rgba(214, 228, 255);
+  --color-sf-primary-dark: rgba(35, 78, 165);
+  --color-sf-primary-darker: rgba(23, 37, 84);
+  --color-sf-primary-text-color: var(--app-on-brand);
+  --color-sf-primary-text: var(--app-on-brand);
+  --color-sf-primary-text-hover: var(--app-on-brand);
+  --color-sf-primary-text-focus: var(--app-on-brand);
+  --color-sf-primary-text-pressed: var(--app-on-brand);
+  --color-sf-primary-bg-color: var(--app-brand-fill);
+  --color-sf-primary-border-color: var(--app-brand-fill);
+  --color-sf-primary-bg-color-hover: var(--app-brand-fill-hover);
+  --color-sf-primary-border-color-hover: var(--app-brand-fill-hover);
+  --color-sf-primary-bg-color-focus: var(--app-brand-fill-hover);
+  --color-sf-primary-border-color-focus: var(--app-brand-fill-hover);
+  --color-sf-primary-bg-color-pressed: var(--app-brand-fill-pressed);
+  --color-sf-primary-border-color-pressed: var(--app-brand-fill-pressed);
+  --color-sf-primary-bg-color-disabled: var(--app-brand-fill-disabled);
+  --color-sf-primary-border-color-disabled: var(--app-brand-fill-disabled);
+  --color-sf-primary-outline: var(--color-sf-fg-brand-primary);
+}
+:root.e-dark-mode {
+  --color-sf-primary: rgba(96, 165, 250);
+  --color-sf-primary-light: rgba(147, 197, 253);
+  --color-sf-primary-lighter: rgba(59, 130, 246);
+  --color-sf-primary-dark: rgba(147, 197, 253);
+  --color-sf-primary-darker: rgba(219, 234, 254);
+}
